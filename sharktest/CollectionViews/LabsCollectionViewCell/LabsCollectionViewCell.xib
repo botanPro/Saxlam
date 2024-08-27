@@ -1,21 +1,138 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13142" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12042"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="LabsCollectionViewCell" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="LabsCollectionViewCell" customModule="sharktest" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="349" height="150"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                <rect key="frame" x="0.0" y="0.0" width="349" height="150"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RpD-au-peo">
+                        <rect key="frame" x="0.0" y="0.0" width="349" height="150"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="DYe-1y-2bL">
+                                <rect key="frame" x="160" y="34" width="177" height="82"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Xzmat Lab Duhok" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K0J-st-X00">
+                                        <rect key="frame" x="0.0" y="0.0" width="177" height="17"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="17" id="6cf-kh-2n7"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="17"/>
+                                        <color key="textColor" red="0.1176470588" green="0.22352941179999999" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OBGN | Jada Shele" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qHA-dG-Y2M">
+                                        <rect key="frame" x="0.0" y="22" width="177" height="14"/>
+                                        <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="12"/>
+                                        <color key="textColor" red="0.35336026278409094" green="0.35336026278409094" blue="0.35336026278409094" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="gJy-U0-e4R">
+                                        <rect key="frame" x="0.0" y="41" width="177" height="18"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calendar" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="xcQ-k3-mZ0">
+                                                <rect key="frame" x="0.0" y="0.99999999999999822" width="18" height="16"/>
+                                                <color key="tintColor" red="0.35336026279999999" green="0.35336026279999999" blue="0.35336026279999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="18" id="Yb3-yk-a9w"/>
+                                                    <constraint firstAttribute="width" constant="18" id="cNN-pD-lYl"/>
+                                                </constraints>
+                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="medium"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mon - Thu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xkc-ba-jQv">
+                                                <rect key="frame" x="23" y="0.0" width="154" height="18"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                                                <color key="textColor" red="0.35336026279999999" green="0.35336026279999999" blue="0.35336026279999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="L8r-4n-cRE">
+                                        <rect key="frame" x="0.0" y="64" width="177" height="18"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timer" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="daB-qm-6lD">
+                                                <rect key="frame" x="0.0" y="0.33333333333333215" width="18" height="17.666666666666668"/>
+                                                <color key="tintColor" red="0.35336026279999999" green="0.35336026279999999" blue="0.35336026279999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="18" id="NJK-IW-wbQ"/>
+                                                    <constraint firstAttribute="height" constant="18" id="aNd-mz-mYZ"/>
+                                                </constraints>
+                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="medium"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10:00 Am - 03:00 Pm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eBi-Oe-0LU">
+                                                <rect key="frame" x="23" y="0.0" width="154" height="18"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                                                <color key="textColor" red="0.42922942809999998" green="0.42922942809999998" blue="0.42922942809999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MLT-Photo-in-text-scaled" translatesAutoresizingMaskIntoConstraints="NO" id="OfD-pt-gfE">
+                                <rect key="frame" x="8" y="5.6666666666666714" width="130" height="139"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="139" id="Ia8-2p-Dbs"/>
+                                    <constraint firstAttribute="width" constant="130" id="OJb-iw-k8j"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="CornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="OfD-pt-gfE" firstAttribute="top" secondItem="RpD-au-peo" secondAttribute="top" constant="5.5" id="LI6-uO-BJa"/>
+                            <constraint firstItem="DYe-1y-2bL" firstAttribute="centerY" secondItem="RpD-au-peo" secondAttribute="centerY" id="PKS-1P-4A0"/>
+                            <constraint firstAttribute="trailing" secondItem="DYe-1y-2bL" secondAttribute="trailing" constant="12" id="U0C-wt-yON"/>
+                            <constraint firstItem="DYe-1y-2bL" firstAttribute="leading" secondItem="OfD-pt-gfE" secondAttribute="trailing" constant="22" id="UnP-Qo-Cna"/>
+                            <constraint firstItem="OfD-pt-gfE" firstAttribute="leading" secondItem="RpD-au-peo" secondAttribute="leading" constant="8" id="bTm-xY-I7w"/>
+                            <constraint firstAttribute="bottom" secondItem="OfD-pt-gfE" secondAttribute="bottom" constant="5.5" id="wC4-0s-Lxt"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="CornerRadius">
+                                <integer key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="RpD-au-peo" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Pzh-Sz-OsK"/>
+                <constraint firstAttribute="bottom" secondItem="RpD-au-peo" secondAttribute="bottom" id="glW-5R-5hv"/>
+                <constraint firstItem="RpD-au-peo" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="mZO-Zf-ns6"/>
+                <constraint firstAttribute="trailing" secondItem="RpD-au-peo" secondAttribute="trailing" id="qgo-AS-WeG"/>
+            </constraints>
+            <size key="customSize" width="349" height="150"/>
+            <connections>
+                <outlet property="Imagee" destination="OfD-pt-gfE" id="6TG-9K-E0c"/>
+                <outlet property="Location" destination="qHA-dG-Y2M" id="M12-ax-thk"/>
+                <outlet property="Name" destination="K0J-st-X00" id="fsA-St-EZX"/>
+                <outlet property="Week" destination="Xkc-ba-jQv" id="eQo-YL-WfV"/>
+                <outlet property="backView" destination="RpD-au-peo" id="0uf-fF-nkz"/>
+                <outlet property="hour" destination="eBi-Oe-0LU" id="Kgo-Kn-YpK"/>
+            </connections>
+            <point key="canvasLocation" x="275.57251908396944" y="-96.478873239436624"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="MLT-Photo-in-text-scaled" width="640" height="853.33331298828125"/>
+        <image name="calendar" catalog="system" width="128" height="107"/>
+        <image name="timer" catalog="system" width="128" height="123"/>
+    </resources>
 </document>

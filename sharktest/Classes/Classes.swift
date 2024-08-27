@@ -5,22 +5,27 @@
 //  Created by Botan Amedi on 23/09/2022.
 //
 
-
 import Foundation
 import UIKit
-import PureLayout
+
 
 class openCartApi{
-    let UserName = "ashraf_shark"
-    let key = "6a93307dd3c1e66a42deb2a04571002592e00c3a"
-    let ActivitiesImages = "https://app.wfbhl.org/panel/upload/activity/"
-    let SliderImages = "https://app.wfbhl.org/panel/upload/slides/"
-    let URL = "https://app.wfbhl.org/panel/api/mobile_api.php";
-    let APP_TITLE = "WFBH"
+    static var UserName = UserDefaults.standard.string(forKey: "openCartApi_userName") ?? ""
+    static var key = UserDefaults.standard.string(forKey: "openCartApi_token") ?? ""
+    let Labs = "https://saxlam.com/panel/upload/labs/"
+    let SliderImages = "https://saxlam.com/panel/upload/slides/"
+    let URL = "https://saxlam.com/panel/api/mobile_api2.php";
+    let PostImages = "https://saxlam.com/panel/upload/posts/"
+    let SocialImages = "https://saxlam.com/panel/upload/social/"
+    let APP_TITLE = "Saxlam"
 }
-let API = openCartApi();
 
-let APP_TITLE = "WFBH"
+
+
+let API = openCartApi();
+let APP_TITLE = "Saxlam"
+
+
 
 extension UITextField{
 
@@ -32,6 +37,7 @@ extension UITextField{
             self.attributedPlaceholder = NSAttributedString(string:self.placeholder != nil ? self.placeholder! : "", attributes:[NSAttributedString.Key.foregroundColor: newValue!])
         }
     }
+    
 }
 
 
@@ -48,8 +54,6 @@ extension UITextField{
         (layer as! CAGradientLayer).colors = [topColor.cgColor, bottomColor.cgColor]
     }
 }
-
-
 
 
 
@@ -131,7 +135,7 @@ extension UIDevice {
         case "iPad7,1", "iPad7,2":                            return "iPad Pro (12.9-inch) (2nd generation)"
         case "iPad8,5", "iPad8,6", "iPad8,7", "iPad8,8":      return "iPad Pro (12.9-inch) (3rd generation)"
         case "iPad8,11", "iPad8,12":                          return "iPad Pro (12.9-inch) (4th generation)"
-        case "iPad13,8", "iPad13,9", "iPad13,10", "iPad13,11":return "iPad Pro (12.9-inch) (5th generation)"
+        case "iPad13,8", "iPad13,9", "iPad13,10", "iPad13,11" :return "iPad Pro (12.9-inch) (5th generation)"
         case "AppleTV5,3":                                    return "Apple TV"
         case "AppleTV6,2":                                    return "Apple TV 4K"
         case "AudioAccessory1,1":                             return "HomePod"
@@ -305,11 +309,11 @@ class EmptyBackgroundView: UIView {
     }
 
     func setupViews() {
-        topSpace = UIView.newAutoLayout()
-        bottomSpace = UIView.newAutoLayout()
-        imageView = UIImageView.newAutoLayout()
-        topLabel = UILabel.newAutoLayout()
-        bottomLabel = UILabel.newAutoLayout()
+//        topSpace = UIView.newAutoLayout()
+//        bottomSpace = UIView.newAutoLayout()
+//        imageView = UIImageView.newAutoLayout()
+//        topLabel = UILabel.newAutoLayout()
+//        bottomLabel = UILabel.newAutoLayout()
 
         addSubview(topSpace)
         addSubview(bottomSpace)
@@ -337,24 +341,24 @@ class EmptyBackgroundView: UIView {
 
     override func updateConstraints() {
         if !didSetupConstraints {
-            topSpace.autoAlignAxis(toSuperviewAxis: .vertical)
-            topSpace.autoPinEdge(toSuperviewEdge: .top)
-            bottomSpace.autoAlignAxis(toSuperviewAxis: .vertical)
-            bottomSpace.autoPinEdge(toSuperviewEdge: .bottom)
-            topSpace.autoSetDimension(.height, toSize: spacing, relation: .greaterThanOrEqual)
-            topSpace.autoMatch(.height, to: .height, of: bottomSpace)
-
-            imageView.autoPinEdge(.top, to: .bottom, of: topSpace)
-            imageView.autoAlignAxis(toSuperviewAxis: .vertical)
-            imageView.autoSetDimension(.height, toSize: imageViewHeight, relation: .lessThanOrEqual)
-
-            topLabel.autoAlignAxis(toSuperviewAxis: .vertical)
-            topLabel.autoPinEdge(.top, to: .bottom, of: imageView, withOffset: spacing)
-
-            bottomLabel.autoAlignAxis(toSuperviewAxis: .vertical)
-            bottomLabel.autoPinEdge(.top, to: .bottom, of: topLabel, withOffset: spacing)
-            bottomLabel.autoPinEdge(.bottom, to: .top, of: bottomSpace)
-            bottomLabel.autoSetDimension(.width, toSize: bottomLabelWidth)
+//            topSpace.autoAlignAxis(toSuperviewAxis: .vertical)
+//            topSpace.autoPinEdge(toSuperviewEdge: .top)
+//            bottomSpace.autoAlignAxis(toSuperviewAxis: .vertical)
+//            bottomSpace.autoPinEdge(toSuperviewEdge: .bottom)
+//            topSpace.autoSetDimension(.height, toSize: spacing, relation: .greaterThanOrEqual)
+//            topSpace.autoMatch(.height, to: .height, of: bottomSpace)
+//
+//            imageView.autoPinEdge(.top, to: .bottom, of: topSpace)
+//            imageView.autoAlignAxis(toSuperviewAxis: .vertical)
+//            imageView.autoSetDimension(.height, toSize: imageViewHeight, relation: .lessThanOrEqual)
+//
+//            topLabel.autoAlignAxis(toSuperviewAxis: .vertical)
+//            topLabel.autoPinEdge(.top, to: .bottom, of: imageView, withOffset: spacing)
+//
+//            bottomLabel.autoAlignAxis(toSuperviewAxis: .vertical)
+//            bottomLabel.autoPinEdge(.top, to: .bottom, of: topLabel, withOffset: spacing)
+//            bottomLabel.autoPinEdge(.bottom, to: .top, of: bottomSpace)
+//            bottomLabel.autoSetDimension(.width, toSize: bottomLabelWidth)
 
             didSetupConstraints = true
         }
@@ -435,6 +439,21 @@ extension String {
             formatter.locale = Locale(identifier: "EN")
             formatter.numberStyle = .currency
             formatter.currencySymbol = "$"
+
+            formatter.maximumFractionDigits = 0
+            if let str = formatter.string(for: value) {
+                return "\(str)"
+            }
+        }
+        return ""
+    }
+    
+    func NumberFormatting() -> String {
+        if let value = Double(self) {
+            let formatter = NumberFormatter()
+            formatter.locale = Locale(identifier: "EN")
+            formatter.numberStyle = .currency
+            formatter.currencySymbol = ""
 
             formatter.maximumFractionDigits = 0
             if let str = formatter.string(for: value) {
@@ -572,4 +591,186 @@ extension String {
         let regex = try! NSRegularExpression(pattern: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", options: .caseInsensitive)
         return regex.firstMatch(in: self, options: [], range: NSRange(location: 0, length: count)) != nil
     }
+}
+
+
+
+enum ResponderStandardEditActions {
+    case cut, copy, paste, select, selectAll, delete
+    case makeTextWritingDirectionLeftToRight, makeTextWritingDirectionRightToLeft
+    case toggleBoldface, toggleItalics, toggleUnderline
+    case increaseSize, decreaseSize
+
+    var selector: Selector {
+        switch self {
+            case .cut:
+                return #selector(UIResponderStandardEditActions.cut)
+            case .copy:
+                return #selector(UIResponderStandardEditActions.copy)
+            case .paste:
+                return #selector(UIResponderStandardEditActions.paste)
+            case .select:
+                return #selector(UIResponderStandardEditActions.select)
+            case .selectAll:
+                return #selector(UIResponderStandardEditActions.selectAll)
+            case .delete:
+                return #selector(UIResponderStandardEditActions.delete)
+            case .makeTextWritingDirectionLeftToRight:
+                return #selector(UIResponderStandardEditActions.makeTextWritingDirectionLeftToRight)
+            case .makeTextWritingDirectionRightToLeft:
+                return #selector(UIResponderStandardEditActions.makeTextWritingDirectionRightToLeft)
+            case .toggleBoldface:
+                return #selector(UIResponderStandardEditActions.toggleBoldface)
+            case .toggleItalics:
+                return #selector(UIResponderStandardEditActions.toggleItalics)
+            case .toggleUnderline:
+                return #selector(UIResponderStandardEditActions.toggleUnderline)
+            case .increaseSize:
+                return #selector(UIResponderStandardEditActions.increaseSize)
+            case .decreaseSize:
+                return #selector(UIResponderStandardEditActions.decreaseSize)
+        }
+    }
+}
+
+class TextField: UITextField {
+
+    private var editActions: [ResponderStandardEditActions: Bool]?
+    private var filterEditActions: [ResponderStandardEditActions: Bool]?
+
+    func setEditActions(only actions: [ResponderStandardEditActions]) {
+        if self.editActions == nil { self.editActions = [:] }
+        filterEditActions = nil
+        actions.forEach { self.editActions?[$0] = true }
+    }
+
+    func addToCurrentEditActions(actions: [ResponderStandardEditActions]) {
+        if self.filterEditActions == nil { self.filterEditActions = [:] }
+        editActions = nil
+        actions.forEach { self.filterEditActions?[$0] = true }
+    }
+
+    private func filterEditActions(actions: [ResponderStandardEditActions], allowed: Bool) {
+        if self.filterEditActions == nil { self.filterEditActions = [:] }
+        editActions = nil
+        actions.forEach { self.filterEditActions?[$0] = allowed }
+    }
+
+    func filterEditActions(notAllowed: [ResponderStandardEditActions]) {
+        filterEditActions(actions: notAllowed, allowed: false)
+    }
+
+    func resetEditActions() { editActions = nil }
+
+    open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        if let actions = editActions {
+            for _action in actions where _action.key.selector == action { return _action.value }
+            return false
+        }
+
+        if let actions = filterEditActions {
+            for _action in actions where _action.key.selector == action { return _action.value }
+        }
+
+        return super.canPerformAction(action, withSender: sender)
+    }
+}
+
+extension UITextField {
+    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return action == #selector(UIResponderStandardEditActions.paste(_:)) ?
+            false : super.canPerformAction(action, withSender: sender)
+    }
+}
+
+
+
+import CoreGraphics
+
+@IBDesignable
+class CornerView: UIView {
+
+    @IBInspectable
+    var sizeMultiplier : CGFloat = 0.2{
+        didSet{
+            self.draw(self.bounds)
+        }
+    }
+
+    @IBInspectable
+    var lineWidth : CGFloat = 4{
+        didSet{
+            self.draw(self.bounds)
+        }
+    }
+
+    @IBInspectable
+    var lineColor : UIColor = UIColor.black{
+        didSet{
+            self.draw(self.bounds)
+        }
+    }
+
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.backgroundColor = UIColor.clear
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.backgroundColor = UIColor.clear
+    }
+
+    func drawCorners()
+    {
+        let currentContext = UIGraphicsGetCurrentContext()
+
+        currentContext?.setLineWidth(lineWidth)
+        currentContext?.setStrokeColor(lineColor.cgColor)
+
+        //first part of top left corner
+        currentContext?.beginPath()
+        currentContext?.move(to: CGPoint(x: 0, y: 0))
+        currentContext?.addLine(to: CGPoint(x: self.bounds.size.width*sizeMultiplier, y: 0))
+        currentContext?.strokePath()
+
+        //top rigth corner
+        currentContext?.beginPath()
+        currentContext?.move(to: CGPoint(x: self.bounds.size.width - self.bounds.size.width*sizeMultiplier, y: 0))
+        currentContext?.addLine(to: CGPoint(x: self.bounds.size.width, y: 0))
+        currentContext?.addLine(to: CGPoint(x: self.bounds.size.width, y: self.bounds.size.height*sizeMultiplier))
+        currentContext?.strokePath()
+
+        //bottom rigth corner
+        currentContext?.beginPath()
+        currentContext?.move(to: CGPoint(x: self.bounds.size.width, y: self.bounds.size.height - self.bounds.size.height*sizeMultiplier))
+        currentContext?.addLine(to: CGPoint(x: self.bounds.size.width, y: self.bounds.size.height))
+        currentContext?.addLine(to: CGPoint(x: self.bounds.size.width - self.bounds.size.width*sizeMultiplier, y: self.bounds.size.height))
+        currentContext?.strokePath()
+
+        //bottom left corner
+        currentContext?.beginPath()
+        currentContext?.move(to: CGPoint(x: self.bounds.size.width*sizeMultiplier, y: self.bounds.size.height))
+        currentContext?.addLine(to: CGPoint(x: 0, y: self.bounds.size.height))
+        currentContext?.addLine(to: CGPoint(x: 0, y: self.bounds.size.height - self.bounds.size.height*sizeMultiplier))
+        currentContext?.strokePath()
+
+        //second part of top left corner
+        currentContext?.beginPath()
+        currentContext?.move(to: CGPoint(x: 0, y: self.bounds.size.height*sizeMultiplier))
+        currentContext?.addLine(to: CGPoint(x: 0, y: 0))
+        currentContext?.strokePath()
+    }
+
+
+    // Only override draw() if you perform custom drawing.
+    // An empty implementation adversely affects performance during animation.
+    override func draw(_ rect: CGRect) {
+        // Drawing code
+        super.draw(rect)
+        self.drawCorners()
+    }
+
+
 }

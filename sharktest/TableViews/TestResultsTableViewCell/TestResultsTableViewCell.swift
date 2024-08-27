@@ -8,16 +8,16 @@
 import UIKit
 
 class TestResultsTableViewCell: UITableViewCell {
-
+    
+    @IBOutlet weak var Share: UIButton!
+    @IBOutlet weak var FullName: UILabel!
+    @IBOutlet weak var Timer: UIImageView!
+    @IBOutlet weak var BackView: UIView!
+    @IBOutlet weak var InvDate: UILabel!
+    @IBOutlet weak var invoicNum: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
 }

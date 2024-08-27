@@ -7,10 +7,8 @@
 
 import UIKit
 
-
 protocol ProfileTappedDelegate: AnyObject {
     func ProfileTapped(_ Profile_id : String)
-    func Like(_ post_id : String,_ like_icon : UIImageView)
     func didTapReadMore(_ post_text : String,_ post_like : String,_ action : Bool)
   }
 
@@ -25,7 +23,8 @@ class PostsCollectionViewCell: UICollectionViewCell, UIGestureRecognizerDelegate
     @IBOutlet weak var Likes: UILabel!
     @IBOutlet weak var Like: UIImageView!
     @IBOutlet weak var Save: UIButton!
-
+    @IBOutlet weak var BackView: UIView!
+    
     @IBOutlet weak var link: UIButton!
     @IBOutlet weak var ProfileView: UIStackView!
     @IBOutlet weak var LikeButton: UIStackView!
@@ -37,23 +36,18 @@ class PostsCollectionViewCell: UICollectionViewCell, UIGestureRecognizerDelegate
     var post_like = ""
     var post_text = ""
     var action = false
+    var LaborDetails : LabsObject?
     
         override func awakeFromNib() {
         super.awakeFromNib()
+            self.BackView.layer.masksToBounds = true
         // Initialization code
         PostText.numberOfLines = 2
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:)))
-        tapGesture.delegate = self
-        ProfileView.isUserInteractionEnabled = true
-        ProfileView.addGestureRecognizer(tapGesture)
-        
-        
-        let tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(LikeButton(recognizer:)))
-        tapGesture1.delegate = self
-        LikeButton.isUserInteractionEnabled = true
-        LikeButton.addGestureRecognizer(tapGesture1)
-            
+
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:)))
+            tapGesture.delegate = self
+            ProfileView.isUserInteractionEnabled = true
+            ProfileView.addGestureRecognizer(tapGesture)
             
             let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(readMoreLabelTapped(recognizer:)))
             tapGesture2.delegate = self
@@ -66,10 +60,6 @@ class PostsCollectionViewCell: UICollectionViewCell, UIGestureRecognizerDelegate
         self.delegate?.ProfileTapped(Profile_id)
     }
     
-    @objc func LikeButton(recognizer:UITapGestureRecognizer) {
-        self.delegate?.Like(post_id, like_button_action)
-    }
-
     @objc private func readMoreLabelTapped(recognizer:UITapGestureRecognizer) {
             delegate?.didTapReadMore(post_text, post_like, action)
     }

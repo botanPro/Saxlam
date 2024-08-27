@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WorkerTypesTableViewcell: UITableViewCell {
+class UsersNameTableViewcell: UITableViewCell {
 
     @IBOutlet weak var Titlee: UILabel!
     override func awakeFromNib() {

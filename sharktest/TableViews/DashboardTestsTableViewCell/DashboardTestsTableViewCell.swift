@@ -8,7 +8,12 @@
 import UIKit
 
 class DashboardTestsTableViewCell: UITableViewCell {
-
+    @IBOutlet weak var Title: UILabel!
+    @IBOutlet weak var Category: UILabel!
+    
+    @IBOutlet weak var Price2: UILabel!
+    @IBOutlet weak var Price: UILabel!
+    @IBOutlet weak var Discount: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

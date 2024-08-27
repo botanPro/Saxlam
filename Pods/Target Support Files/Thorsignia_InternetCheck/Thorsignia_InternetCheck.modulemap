@@ -1,0 +1,6 @@
+framework module Thorsignia_InternetCheck {
+  umbrella header "Thorsignia_InternetCheck-umbrella.h"
+
+  export *
+  module * { export * }
+}

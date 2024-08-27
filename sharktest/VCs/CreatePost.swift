@@ -12,23 +12,24 @@ import Alamofire
 import SwiftyJSON
 import Drops
 
-class CreatePostVc: UIViewController , UITextViewDelegate,UITextFieldDelegate{
+class CreatePost: UIViewController , UITextViewDelegate,UITextFieldDelegate{
     @IBOutlet weak var PlaceHOlder: UITextView!
-    let loadingView = SJLoadingView()
     @IBOutlet weak var TextMess: UITextView!
     @IBOutlet weak var TextViewheightConstraint: NSLayoutConstraint!
     @IBOutlet weak var ProfileName: UILabel!
-    @IBOutlet weak var ProfileImage: UIImageView!
     @IBOutlet weak var PostImage: UIImageView!
     let minTextViewHeight: CGFloat = 33
     let maxTextViewHeight: CGFloat = 4000
-    @IBOutlet weak var Video_Link: LanguagePlaceHolder!
+    @IBOutlet weak var Video_Link: TextField!
     
     var ComingPostId = ""
     var ComingPostDesc = ""
     var ComingPostImage = ""
     var CommingVideoURL = ""
     var IsUpdating = false
+    @IBAction func Dimiss(_ sender: Any) {
+        self.dismiss(animated: true)
+    }
     
     func textViewDidChange(_ textView: UITextView) {
         
@@ -54,41 +55,50 @@ class CreatePostVc: UIViewController , UITextViewDelegate,UITextFieldDelegate{
         }
       
     }
+    
+    
+    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return action == #selector(UIResponderStandardEditActions.paste(_:)) ?
+            false : super.canPerformAction(action, withSender: sender)
+    }
+    
+    
+    
     @IBOutlet weak var AlbumView: UIView!
-    @IBOutlet weak var CameraView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if XLanguage.get() == .English{
-            self.PlaceHOlder.text = "What's on your mind?"
+            self.PlaceHOlder.text = "Post available tests here"
+        }else if XLanguage.get() == .Arabic{
+            self.PlaceHOlder.text = "قم بنشر الاختبارات المتاحة هنا"
+        }else{
+            self.PlaceHOlder.text = "پشکنینێن بەردەست ل ڤێرێرێ بەلاڤ بکە"
         }
         
         self.Video_Link.delegate = self
+        self.Video_Link.allowsEditingTextAttributes = true
         
-        loadingView.lineColor = UIColor.black
-        loadingView.bounds = CGRectMake(0, 0, 50, 50);
-        loadingView.center = self.view.center;
-        loadingView.speed = 1;
-        self.view.addSubview(loadingView)
         self.TextMess.delegate = self
         self.TextMess.backgroundColor = .clear
         self.ProfileName.text = ""
-        self.ProfileImage.image = UIImage()
-        ProfileDataAPI.GetProfileData(id: UserDefaults.standard.string(forKey: "UserId") ?? "") { Data in
-            self.ProfileName.text = Data.full_name
-            let urlString = Data.image
-            let url = URL(string: "\(API.ProfileImages)\(urlString)")
-            self.ProfileImage?.sd_setImage(with: url, completed: nil)
+        ProfileDataAPI.GetProfileData(id: UserDefaults.standard.string(forKey: "id") ?? "") { data,error  in
+            self.ProfileName.text = data.full_name
         }
         
         if self.IsUpdating == true{
             self.AlbumView.isUserInteractionEnabled = false
-            self.CameraView.isUserInteractionEnabled = false
-            self.CameraView.alpha = 0.4
             self.AlbumView.alpha = 0.4
             self.Video_Link.text = self.CommingVideoURL
             if self.ComingPostDesc == ""{
-                self.PlaceHOlder.text = "What's on your mind?"
+                
+                if XLanguage.get() == .English{
+                    self.PlaceHOlder.text = "Post available tests here"
+                }else if XLanguage.get() == .Arabic{
+                    self.PlaceHOlder.text = "قم بنشر الاختبارات المتاحة هنا"
+                }else{
+                    self.PlaceHOlder.text = "پشکنینێن بەردەست ل ڤێرێرێ بەلاڤ بکە"
+                }
             }else{
                 self.PlaceHOlder.text = ""
                 self.TextMess.text = self.ComingPostDesc
@@ -102,7 +112,6 @@ class CreatePostVc: UIViewController , UITextViewDelegate,UITextFieldDelegate{
                 }
             })
         }
-    
     }
     
     
@@ -157,15 +166,14 @@ class CreatePostVc: UIViewController , UITextViewDelegate,UITextFieldDelegate{
     }
     
     
-
        // MARK: - URL Validation
        
-       func isValidURL(urlString: String) -> Bool {
-           // Use a regular expression to validate the URL
-           let urlRegex = #"^(http(s)?://)?(www\.)[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(:[0-9]+)?(/.*)?$"#
-               let urlTest = NSPredicate(format: "SELF MATCHES %@", urlRegex)
-               return urlTest.evaluate(with: urlString)
-       }
+    func isValidURL(_ urlString: String) -> Bool {
+        // Use a permissive regular expression to validate the URL
+        let urlRegex = #"^(http(s)?://)?([\w-]+\.+[\w-]+)+.*"#
+        let urlTest = NSPredicate(format: "SELF MATCHES %@", urlRegex)
+        return urlTest.evaluate(with: urlString)
+    }
     
     func showAlert(message: String) {
            let alertController = UIAlertController(
@@ -173,7 +181,6 @@ class CreatePostVc: UIViewController , UITextViewDelegate,UITextFieldDelegate{
                message: message,
                preferredStyle: .alert
            )
-
            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
            alertController.addAction(okAction)
 
@@ -181,14 +188,13 @@ class CreatePostVc: UIViewController , UITextViewDelegate,UITextFieldDelegate{
        }
 
     @IBAction func Post(_ sender: Any) {
-
-           
+        if CheckInternet.Connection() == true{
             if self.IsUpdating == false{
                 if UserDefaults.standard.bool(forKey: "Login") == true{
                     if self.Images.count != 0{
                        
                         if self.Video_Link.text != ""{
-                            if self.isValidURL(urlString: self.Video_Link.text!) == false{
+                            if self.isValidURL(self.Video_Link.text!) == false{
                                     self.showAlert(message: "Invalid URL format. Please enter a valid URL.")
                                 return
                             }
@@ -197,10 +203,16 @@ class CreatePostVc: UIViewController , UITextViewDelegate,UITextFieldDelegate{
                         if XLanguage.get() == .English{
                             self.loadingLableMessage = "Please wait..."
                             self.LoadingView()
+                        }else if XLanguage.get() == . Arabic{
+                            self.loadingLableMessage = "يرجى الانتظار..."
+                            self.LoadingView()
+                        }else{
+                            self.loadingLableMessage = "هیڤیە چاڤەرێبە..."
+                            self.LoadingView()
                         }
                         uploadPostImage(image: self.Images[0]) { imageString in
                             
-                            PostObjectApi.AddPost(UserId: UserDefaults.standard.string(forKey: "UserId") ?? "", Desc: self.TextMess.text!,Image: imageString,video_url: self.Video_Link.text!) { Done in
+                            PostObjectApi.AddPost(UserId: UserDefaults.standard.string(forKey: "my_lab_id") ?? "", Desc: self.TextMess.text!,Image: imageString,video_url: self.Video_Link.text!) { Done in
                                 self.alert.dismiss(animated: true, completion: {
                                     var mss = ""
                                     if XLanguage.get() == .English{
@@ -220,20 +232,25 @@ class CreatePostVc: UIViewController , UITextViewDelegate,UITextFieldDelegate{
                                         accessibility: "Alert: Title, Subtitle"
                                     )
                                     Drops.show(drop)
-                                    self.navigationController?.popViewController(animated: true)
+                                    self.dismiss(animated: true)
                                 })
                                    
                             }
                         }
                     }else{
-                        
                         self.alert.dismiss(animated: true, completion: {
                             if self.Images.count == 0{
                                 var mss = ""
                                 var action = ""
                                 if XLanguage.get() == .English{
-                                    mss = "Please Select Image for the post"
+                                    mss = "Please Select Image"
                                     action = "Ok"
+                                }else if XLanguage.get() == .Arabic{
+                                    mss = "تکایە وێنە هەڵبژێرە"
+                                    action = "حسنا"
+                                }else{
+                                    mss = "هیڤیە وێنەکی هەلبژێرە"
+                                    action = "باشە"
                                 }
                                 let myAlert = UIAlertController(title: nil, message: mss, preferredStyle: UIAlertController.Style.alert)
                                 myAlert.addAction(UIAlertAction(title: action, style: UIAlertAction.Style.default, handler: nil))
@@ -244,23 +261,25 @@ class CreatePostVc: UIViewController , UITextViewDelegate,UITextFieldDelegate{
                     }
                 }else{
                     self.alert.dismiss(animated: true, completion: nil)
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    let myVC = storyboard.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
-                    myVC.modalPresentationStyle = .fullScreen
-                    self.present(myVC, animated: true)
                 }
             }else{
                 if UserDefaults.standard.bool(forKey: "Login") == true{
                         if self.Video_Link.text != ""{
-                            if self.isValidURL(urlString: self.Video_Link.text!) == false{
+                            if self.isValidURL(self.Video_Link.text!) == false{
                                     self.showAlert(message: "Invalid URL format. Please enter a valid URL.")
                                 return
                             }
                         }
-                        if XLanguage.get() == .English{
-                            self.loadingLableMessage = "Please wait..."
-                            self.LoadingView()
-                        }
+                    if XLanguage.get() == .English{
+                        self.loadingLableMessage = "Please wait..."
+                        self.LoadingView()
+                    }else if XLanguage.get() == . Arabic{
+                        self.loadingLableMessage = "يرجى الانتظار..."
+                        self.LoadingView()
+                    }else{
+                        self.loadingLableMessage = "هیڤیە چاڤەرێبە..."
+                        self.LoadingView()
+                    }
                         
                         PostObjectApi.UpdatePost(PostId: self.ComingPostId, Desc: self.TextMess.text!,video_url: self.Video_Link.text!) { Done in
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
@@ -283,7 +302,7 @@ class CreatePostVc: UIViewController , UITextViewDelegate,UITextFieldDelegate{
                                         accessibility: "Alert: Title, Subtitle"
                                     )
                                     Drops.show(drop)
-                                    self.navigationController?.popViewController(animated: true)
+                                    self.dismiss(animated: true)
                                 })
                                 
                             })
@@ -291,14 +310,42 @@ class CreatePostVc: UIViewController , UITextViewDelegate,UITextFieldDelegate{
                     
                 }else{
                     self.alert.dismiss(animated: true, completion: {
-                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                        let myVC = storyboard.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
-                        myVC.modalPresentationStyle = .fullScreen
-                        self.present(myVC, animated: true)
                     })
                     
                 }
           }
+        
+    }else{
+        var mss = ""
+        var action = ""
+        if XLanguage.get() == .English{
+            mss = "No internet conection"
+            action = "Ok"
+        }else if XLanguage.get() == .Kurdish{
+            mss = "هێلا ئینترنێتێ نینە"
+            action = "باشە"
+        }else{
+            mss = "لا يوجد اتصال بالإنترنت"
+            action = "حسنا"
+        }
+
+Drops.hideAll()
+
+let drop = Drop(
+    title: "",
+    subtitle: mss,
+    icon: nil,
+    action: .init {
+        print("Drop tapped")
+        Drops.hideCurrent()
+    },
+    position: .top,
+    duration: 3.0,
+    accessibility: "Alert: Title, Subtitle"
+)
+Drops.show(drop)
+
+    }
     }
     
     
@@ -337,9 +384,7 @@ class CreatePostVc: UIViewController , UITextViewDelegate,UITextFieldDelegate{
         
     }
     
-    @IBAction func ShowCamera(_ sender: Any) {
-        
-    }
+
     
     
     func uploadPostImage(image: UIImage,completion : @escaping (_ Done : String)->()){
@@ -356,8 +401,6 @@ class CreatePostVc: UIViewController , UITextViewDelegate,UITextFieldDelegate{
 
         // Define your parameters
         let param: [String: Any] = [
-            "key": openCartApi.key,
-            "username": openCartApi.UserName,
             "fun": "upload_post_img"
         ]
 

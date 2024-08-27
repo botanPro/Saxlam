@@ -1,0 +1,6 @@
+framework module ShimmerLabel {
+  umbrella header "ShimmerLabel-umbrella.h"
+
+  export *
+  module * { export * }
+}

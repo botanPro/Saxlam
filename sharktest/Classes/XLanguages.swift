@@ -14,6 +14,7 @@ class XLanguage {
         case Arabic
         case Kurdish
         case English
+        case none
     }
     
     
@@ -132,7 +133,6 @@ class LanguagePlaceHolder: UITextField{
     }
     
     @objc func update(){
-        
         if XLanguage.get() == .Arabic{
             self.placeholder = ArabicText
         }else if XLanguage.get() == .Kurdish{

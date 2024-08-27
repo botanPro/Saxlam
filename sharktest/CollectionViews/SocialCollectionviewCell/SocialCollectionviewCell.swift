@@ -9,9 +9,15 @@ import UIKit
 
 class SocialCollectionviewCell: UICollectionViewCell {
 
+    @IBOutlet weak var Image: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        Image.layer.cornerRadius = Image.bounds.width / 2
+        Image.layer.shadowColor = UIColor.black.cgColor
+        Image.layer.shadowOpacity = 0.2
+        Image.layer.shadowOffset = CGSize(width: 0, height: 1)
+        Image.layer.shadowRadius = 1
+        Image.layer.masksToBounds = false
     }
 
 }

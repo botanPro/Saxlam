@@ -93,13 +93,13 @@ public struct QRDispenser {
                 
                 if let tint = tint {
                     
-                    let tintedImage  = outputImage.tinted(using: tint)!
+                    let tintedImage  = outputImage.tinted(using: .black)!
                     qrImage = context.createCGImage(tintedImage, from: tintedImage.extent).map(UIImage.init)!
                     
                 } else {
                     let maskFilter = CIFilter.blendWithMask()
                     maskFilter.maskImage = outputImage.applyingFilter("CIColorInvert")
-                    maskFilter.inputImage = CIImage(color: .white)
+                    maskFilter.inputImage = CIImage(color: .black)
 
                     let darkCIImage = maskFilter.outputImage!
                     maskFilter.inputImage = CIImage(color: .black)

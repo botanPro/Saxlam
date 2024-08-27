@@ -8,7 +8,14 @@
 import UIKit
 
 class IncomeTableViewCell: UITableViewCell {
-
+    @IBOutlet weak var InvDate: UILabel!
+    @IBOutlet weak var invoicNum: UILabel!
+    
+    @IBOutlet weak var Remain: UILabel!
+    @IBOutlet weak var Cash: UILabel!
+    @IBOutlet weak var Total: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

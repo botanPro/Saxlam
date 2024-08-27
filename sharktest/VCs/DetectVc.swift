@@ -6,24 +6,20 @@
 //
 
 import UIKit
+import UIKit
+import CoreLocation
 
-class DetectVc: UIViewController {
+class DetectVC: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        let locManager = CLLocationManager()
+        locManager.requestWhenInUseAuthorization()
+        if UserDefaults.standard.bool(forKey: "Login") == false{
+            self.performSegue(withIdentifier: "FirstVC", sender: nil)
+        }else{
+            self.performSegue(withIdentifier: "GoToApp", sender: nil)
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
